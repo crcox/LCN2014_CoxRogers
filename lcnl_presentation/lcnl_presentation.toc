@@ -1,0 +1,15 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\beamer@endinputifotherversion {3.20pt}
+\defcounter {refsection}{0}\relax 
+\beamer@sectionintoc {1}{Why?}{2}{0}{1}
+\defcounter {refsection}{0}\relax 
+\beamer@subsectionintoc {1}{1}{fMRI datasets are complicated}{2}{0}{1}
+\defcounter {refsection}{0}\relax 
+\beamer@subsectionintoc {1}{2}{Distributed Representations}{8}{0}{1}
+\defcounter {refsection}{0}\relax 
+\beamer@sectionintoc {2}{Simulations}{28}{0}{2}
+\defcounter {refsection}{0}\relax 
+\beamer@subsectionintoc {2}{1}{The model; the data}{28}{0}{2}
+\defcounter {refsection}{0}\relax 
+\beamer@subsectionintoc {2}{2}{Results}{33}{0}{2}

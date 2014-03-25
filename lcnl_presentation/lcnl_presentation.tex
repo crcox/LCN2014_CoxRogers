@@ -1,0 +1,166 @@
+\documentclass{beamer}
+\usepackage{biblatex}
+\addbibresource{/Users/lcnllab/Documents/MASTERBIB/zotero.bib}
+
+\usepackage{etoolbox}
+\DeclareCiteCommand{\footpartcite}[\mkbibfootnote]
+  {\usebibmacro{prenote}}
+  {%\usebibmacro{citeindex}\mkbibbrackets{\usebibmacro{cite}}\setunit{\addnbspace}
+   \printnames{labelname}\setunit{\labelnamepunct}
+%   \printfield[citetitle]{title}%
+   \newunit
+   \printfield{year}}
+  {\addsemicolon\space}
+  {\usebibmacro{postnote}}
+  
+\usetheme{CambridgeUS}
+\setbeamertemplate{items}[default]
+\setbeamercolor*{item}{fg=darkred}
+%\addtobeamertemplate{block begin}{}{\setlength{\parskip}{35pt plus 10pt minus 10pt}}
+\setlength{\parskip}{16pt plus 1pt minus 1pt}
+
+\title[SOS LASSO]{SOS LASSO: A new method for finding distributed representations in fMRI data.}
+\author{Chris Cox}
+\institute{University of Wisconsin, Madison}
+\date{\today}
+
+\newcommand {\framedgraphic}[2] {
+    \begin{frame}{#1}
+        \begin{center}
+            \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{#2}
+        \end{center}
+    \end{frame}
+}
+
+\begin{document}
+
+%%%
+%% TITLE PAGE 
+%%%
+\begin{frame}
+\titlepage
+\end{frame}
+
+%%%
+%% OUTLINE
+%%%
+%\begin{frame}
+%\frametitle{Outline}
+%\tableofcontents
+%\end{frame}
+
+%%%
+%% WHY?
+%%%
+\section{Why?}
+\subsection{fMRI datasets are complicated}
+\begin{frame}
+\frametitle{Wait... {\em ANOTHER} new fMRI method?}
+\begin{itemize}
+\item Because of the complexity of the brain, the data yielded up by fMRI, and and the sophistication of cognitive theory, there are dozens of options of available.
+\pause
+\item Importantly, each exists to address different questions, makes different assumptions about for the most relevant neural activity is encoded.
+\end{itemize}
+\end{frame}
+
+
+%%%
+%% DATA EXAMPLE
+%%%
+\framedgraphic{A small glimpse of the problem}{data_demo_1.pdf}
+\framedgraphic{A small glimpse of the problem}{data_demo_2.pdf}
+\framedgraphic{A small glimpse of the problem}{data_demo_3.pdf}
+\framedgraphic{A small glimpse of the problem}{data_demo_4.pdf}
+
+%%%
+%% DISTRIBUTED REPRESENTATION
+%%%
+\subsection{Distributed Representations}
+\begin{frame}
+\frametitle{``Distributed representation''}
+In cognitive psychology, questions are always being answered at a variety of levels: \pause (a) What things are being represented? \pause (b) How might they be represented, in principle? \pause (c) How are they {\em actually} physically represented? 
+
+PDP theory is one of the only mechanistic accounts of cognition that makes explicit predictions about {\bf how} our mental representation are actually encoded by the brain. 
+
+PDP theory predicts that representations are {\bf distributed}.
+\end{frame}
+
+
+%%%
+%% WHY DIST REPS ARE HARD
+%%%
+\begin{frame}
+\frametitle{Challenges of distributed representation}
+\begin{enumerate}
+  \item The behavior of a given cortical subregion (i.e., voxel or voxel cluster) can vary substantially across individuals even if different individuals encode the same representational structure across the same general regions.
+  \pause
+  \item Activation of individual units may not be interpretable independent of other units.
+  \pause
+  \item The functional model architecture may not map transparently onto anatomical structure in the brain.
+  \pause
+  \item The network of interest in any given study co-exists in the brain with many other networks, all subserving other functions that may not be of interest.
+\end{enumerate}
+\end{frame}
+
+%%%
+%% WHAT DO WE GAIN FROM THIS COMPLEXITY?
+%%%
+\begin{frame}
+\frametitle{What do distributed representations buy us?}
+\begin{enumerate}
+\pause \item A natural basis for similarity-based generalization.\footpartcite{greer_emergence_2001}
+\pause \item Similarity-based generalization also naturally produces patterns of behavior observed in many different tasks, such as typicality effects, frequency effects, and effects of quasi-regularity. \footpartcite{plaut_understanding_1996-1} \footpartcite{rogers_object_2003}
+\pause \item Distributed representations explain why, with neuropathology, cognitive abilities are not disrupted in an all-or-none fashion, but instead degrade gracefully. \footpartcite{devlin_category-specific_1998} \footpartcite{rogers_structure_2004}
+\pause \item They provide a means of understanding the acquisition of new representations.
+\pause \item Distributed representations can be highly efficient. \footpartcite{hinton_distributed_1984}
+\end{enumerate}
+\end{frame}
+
+%%%
+%% THE PLAN
+%%%
+\begin{frame}
+\frametitle{How can we find distributed representations?}
+{\bf The goal:} To find a method whose assumptions about the how information is encoded in the brain is sufficiently loose so that individual differences do not wipe out the signal, but sufficiently constrained so that the results are interpretable. 
+
+{\bf The plan:} Attempt many analyses, making a range of assumptions that run the gamut of those applied to fMRI data, and examine the results.
+\begin{enumerate}
+\pause \item Univariate contrast analysis
+\pause \item Multivariate seachlight analysis
+\pause \item Ridge Regression
+\pause \item LASSO
+\pause \item {\bf SOS LASSO}
+\end{enumerate}
+\end{frame}
+
+\section{Simulations}
+\subsection{The model; the data}
+
+%%%
+%% THE MODEL
+%%%
+\framedgraphic{A model to simulate our data}{../figures/model_outline.eps}
+\framedgraphic{Where information is located}{../figures/between_within_dist.eps}
+\framedgraphic{``Localized'' distributed representations}{data_demo_3.pdf}
+\framedgraphic{``Dispersed'' distributed representations}{data_demo_4.pdf}
+
+\framedgraphic{Where information is located}{../figures/between_within_dist.eps}
+
+\subsection{Results}
+\framedgraphic{Strong localization assumption, within and across}{../figures/univariate.eps}
+\framedgraphic{Less strong localization assumptions (but still there)}{../figures/searchlight.eps}
+\framedgraphic{No localization assumption (and no feature selection!)}{RidgeTritile_grey.pdf}
+\framedgraphic{No localization assumption, with feature selection}{lasso_only.eps}
+\framedgraphic{Relaxed localization assumption + feature selection}{soslasso_only.eps}
+
+\begin{frame}
+\frametitle{Conclusions}
+\begin{enumerate}
+\pause \item (Yes, I know I didn't get to the actual brain data.)
+\pause \item The assumptions that an method makes about how information is encoded has a large effect on what will be found.
+\pause \item Different methods provide different levels of information about the signal it does identify.
+\pause \item SOS LASSO appears uniquely suited to test hypotheses about distributed representations in the brain.
+\end{enumerate}
+\end{frame}
+
+\end{document}

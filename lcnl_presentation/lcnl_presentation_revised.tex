@@ -1,0 +1,165 @@
+\documentclass{beamer}
+\usepackage{biblatex}
+\addbibresource{/Users/lcnllab/Documents/MASTERBIB/zotero.bib}
+
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{etoolbox}
+\DeclareCiteCommand{\footpartcite}[\mkbibfootnote]
+  {\usebibmacro{prenote}}
+  {%\usebibmacro{citeindex}\mkbibbrackets{\usebibmacro{cite}}\setunit{\addnbspace}
+   \printnames{labelname}\setunit{\labelnamepunct}
+%   \printfield[citetitle]{title}%
+   \newunit
+   \printfield{year}}
+  {\addsemicolon\space}
+  {\usebibmacro{postnote}}
+  
+\usetheme{CambridgeUS}
+\setbeamertemplate{items}[default]
+\setbeamercolor*{item}{fg=darkred}
+%\addtobeamertemplate{block begin}{}{\setlength{\parskip}{35pt plus 10pt minus 10pt}}
+\setlength{\parskip}{16pt plus 1pt minus 1pt}
+
+\title[SOS LASSO]{SOS LASSO: A new method for finding distributed representations in fMRI data.}
+\author{Chris Cox}
+\institute{University of Wisconsin, Madison}
+\date{\today}
+
+\newcommand {\framedgraphic}[2] {
+    \begin{frame}{#1}
+        \begin{center}
+            \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{#2}
+        \end{center}
+    \end{frame}
+}
+
+\begin{document}
+
+%%%
+%% TITLE PAGE 
+%%%
+\begin{frame}
+\titlepage
+\end{frame}
+
+%%%
+%% OUTLINE
+%%%
+%\begin{frame}
+%\frametitle{Outline}
+%\tableofcontents
+%\end{frame}
+
+%%%
+%% INTRODUCTION
+%%%
+\section{Introduction}
+
+\begin{frame}
+\frametitle{Background}
+\begin{itemize}
+\item PDP models have been gainfully used to develop theory regarding variety of behaviors cognitive phenomena. 
+\item The way in which information is encoded in these models---in the form of {\bf distributed representations}---is responsible for why the models behave as they do.
+\item However, there is limited neural evidence for distributed representation in the brain.
+\item {\bf This may be largely for methodological reasons.} The assumptions inherent in many neuroimaging methods make them ill-suited to discovering distributed representations in neural data.
+\end{itemize}
+\end{frame}
+
+\section{Method}
+\begin{frame}
+\frametitle{Method}
+\begin{enumerate}
+\item We generated data 
+\end{enumerate}
+\end{frame}
+
+%%%
+%% WHY DIST REPS ARE HARD
+%%%
+\begin{frame}
+\frametitle{Challenges of distributed representation}
+\begin{enumerate}
+  \item The behavior of a given cortical subregion (i.e., voxel or voxel cluster) can vary substantially across individuals even if different individuals encode the same representational structure across the same general regions.
+  \pause
+  \item Activation of individual units may not be interpretable independent of other units.
+  \pause
+  \item The functional model architecture may not map transparently onto anatomical structure in the brain.
+  \pause
+  \item The network of interest in any given study co-exists in the brain with many other networks, all subserving other functions that may not be of interest.
+\end{enumerate}
+\end{frame}
+
+%%%
+%% DATA EXAMPLE
+%%%
+\framedgraphic{A small glimpse of the problem}{data_demo_1.pdf}
+\framedgraphic{A small glimpse of the problem}{data_demo_2.pdf}
+\framedgraphic{A small glimpse of the problem}{data_demo_3.pdf}
+\framedgraphic{A small glimpse of the problem}{data_demo_4.pdf}
+
+
+%%%
+%% THE PLAN
+%%%
+\begin{frame}
+\frametitle{Method}
+\begin{enumerate}
+\item Generate data that instantiates these challenges. Some units in each dataset adhere to standard assumptions about how neural units behave (neighboring units activate in similar ways; units activate similarly across subjects), and other units that participate in distributed representations that violate these assumptions.
+\item Analyze these datasets with a set of methods that make different assumptions about the underlying signal. The different outcomes follow directly from these assumptions, and what structure in the data the method is sensitive to.
+\item Through this analysis, the relative strengths and weaknesses for each method are illustrated.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Overview}
+\begin{tabular}{l|c|c|c|c|}
+ & \multicolumn{2}{c|}{Assumes same ...} & \multicolumn{2}{c|}{ Provides ...} \\
+ & Location & Encoding  & Unit info & Importance \\
+Univariate & \checkmark &  \checkmark & \checkmark & \checkmark\\
+Searchlight & & \checkmark &  & \checkmark \\
+Ridge & & & \checkmark & \\
+LASSO & & & \checkmark & \checkmark \\
+SOS LASSO & \checkmark & & \checkmark & \checkmark \\
+\end{tabular}
+
+%\begin{enumerate}
+%\pause \item Univariate contrast analysis
+%\pause \item Multivariate seachlight analysis
+%\pause \item Ridge Regression
+%\pause \item LASSO
+%\pause \item {\bf SOS LASSO}
+%\end{enumerate}
+\end{frame}
+
+\section{Simulations}
+\subsection{The model; the data}
+
+%%%
+%% THE MODEL
+%%%
+\framedgraphic{A model to simulate our data}{../figures/model_outline.eps}
+\framedgraphic{Where information is located}{../figures/between_within_dist.eps}
+\framedgraphic{``Localized'' distributed representations}{data_demo_3.pdf}
+\framedgraphic{``Dispersed'' distributed representations}{data_demo_4.pdf}
+
+\framedgraphic{Where information is located}{../figures/between_within_dist.eps}
+
+\subsection{Results}
+\framedgraphic{Strong localization assumption, within and across}{../figures/univariate.eps}
+\framedgraphic{Less strong localization assumptions (but still there)}{../figures/searchlight.eps}
+\framedgraphic{No localization assumption (and no feature selection!)}{RidgeTritile_grey.pdf}
+\framedgraphic{No localization assumption, with feature selection}{lasso_only.eps}
+\framedgraphic{Relaxed localization assumption + feature selection}{soslasso_only.eps}
+
+\begin{frame}
+\frametitle{Conclusions}
+\begin{enumerate}
+\pause \item (Yes, I know I didn't get to the actual brain data.)
+\pause \item The assumptions that an method makes about how information is encoded has a large effect on what will be found.
+\pause \item Different methods provide different levels of information about the signal it does identify.
+\pause \item SOS LASSO appears uniquely suited to test hypotheses about distributed representations in the brain.
+\end{enumerate}
+\end{frame}
+
+\end{document}
