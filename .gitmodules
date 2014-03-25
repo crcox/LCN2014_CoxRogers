@@ -1,6 +1,3 @@
-[submodule "MASTERBIB"]
-	path = MASTERBIB
-	url = ./MASTERBIB
 [submodule "MASTERBIB2"]
 	path = MASTERBIB2
 	url = git@github.com:crcox/MASTERBIB.git
