@@ -4,36 +4,62 @@ The limitations of the searchlight method arise from the relationship between a 
 
 Logistic regression provides one form of classifier that is a natural candidate for this sort of analysis. Standard logistic regression can be viewed as an optimization that seeks a set of coefficients (predictor weights) minimizing, across all items in the training data, the discrepancy between the model output and item labels. Let the item labels be represented by $y\in{\left\{0,1\right\}}$.  This discrepancy can be quantified by the logistic loss function:
 
-{\em  formula here?}
 \begin{align}
 f(z) = \frac{e^z}{1+e^{z}}
 \label{eq.logisticloss}
 \end{align}
 
-Where $z = \beta_0 + \beta_1X_{i 1} + \beta_2X_{i 2} + \dots +  \beta_1X_{i n} + e_{i}$, and $f(z)$ can be interpreted as the probability that $y=1$ given the pattern of activity for the $i^{th}$ item. 
+Where $z = \beta_0 + \beta_1X_{i 1} + \beta_2X_{i 2} + \dots +  \beta_1X_{i n} + e_{i}$---the model's linear response to a particular pattern of activity. Thus, $f(z)$ is a transformation of the linear response that can be interpreted as the probability that $y=1$ given the pattern of activity for the $i^{th}$ item. 
+%The vector $mathbf{z}$ will contain the predicted probabilities for all $n$ input patterns. 
+The goal of the optimization is to minimize the sum of squared differences between the true labels in $y \in{\{0,1\}}$ and the probabilities assigned by the model.
+
+\begin{align}
+\argmin_\beta \sum^{n}_{i=1}{\left(y_i-f\left( \beta X_i\right) \right)^2}
+\label{eq.logisticopt}
+\end{align}
 
 As noted previously, the problem is that there are infinite possible solutions to the minimization when there are more predictors than items. One needs a way of deciding which among these is most likely to uncover the real signal. {\em Regularized} regression provides one way of doing this. Such approaches seek to jointly minimize the logistic loss (i.e., error in prediction) plus an additional cost, itself a function of the coefficients:
 
-{\em  equation?}
-%\begin{align}
-%\hat \mathbf{w} = argmin{w} \left( \sum^n_i{\left(y-f(z)\right)^2}\right) + \lambda h(x)
-%\end{align} 
+\begin{align}
+\argmin_\beta \sum^{n}_{i=1}{\left( y_i-f\left( \beta X_i\right) \right) ^2} + \lambda h(\beta)
+\label{eq.regularized}
+\end{align}
 
-The additional penalty or {\em regularizer} essentially ``prioritizes'' some model solutions over others, and in this way embodies a hypothesis about the nature of the ``true'' underlying signal. The constant $\lambda$ is a free parameter that controls the degree to which the two terms (prediction error versus minimization of the regularizer) should be weighted in the joint optimization.
+The additional penalty or {\em regularizer} represented by $h(\beta)$ essentially ``prioritizes'' some model solutions over others, and in this way embodies a hypothesis about the nature of the ``true'' underlying signal. The constant $\lambda$ is a free parameter that controls the degree to which the two terms (prediction error versus minimization of the regularizer) should be weighted in the joint optimization.
 
-We here consider two varieties of regularized logistic regression recently employed in the fMRI literature \cite{XX}: L1-regularized regression or LASSO, and L2-regularized or {\em ridge regression}. Though superficially similar, the two methods embody different implicit assumptions about the nature of the underlying signal and so yield quite different results. In LASSO, the regularizer is the L1-norm of the coefficients, that is, the sum of their absolute values:
+We here consider two varieties of regularized logistic regression recently employed in the fMRI literature: {\em LASSO} and {\em ridge regression} \cite{riggall_relationship_2012,rish_sparse_2012}. Though superficially similar, the two methods embody different implicit assumptions about the nature of the underlying signal and so yield quite different results. In LASSO, the regularizer is the L1-norm of the coefficients, that is, the sum of their absolute values:
 
-{\em  equation here}
+\begin{align}
+h(\beta) = \sum^m_{j=1} abs(\beta_i)
+\label{eq.lasso}
+\end{align}
 
 For ridge regression, the penalty is the L2-norm of the coefficients, that is, the sum of their squared values:
 
-{\em  equation here}
+\begin{align}
+h(\beta) = \sum^m_{j=1}\beta_i^2
+\label{eq.ridge}
+\end{align}
 
-In both cases, any predictor that carries no information at all about the category label should receive a zero weight, since this minimizes the predictor's contribution to the regularization penalty and without affecting the prediction error. In this sense, both methods can be viewed as ``weeding out'' irrelevant predictors. Apart from this similarity, however, the penalties behave very differently. To understand why, it is useful to consider how they treat sets of predictors that covary together with one another. Imagine 4 voxels whose responses across items are perfectly correlated, and suppose their activations are useful in predicting the condition label. In this scenario, there are many different ways of placing weights over the 4 voxels that will all have the same effect on the classifier output. For instance, placing a weight of 1 on each voxel will have exactly the same effect as placing a weight of 4 on one voxel and a weight of 0 on the other three. Because the voxel activations are perfectly correlated, and the classifier operates on a weighted sum over voxel activations, these different weight configurations have the same effect on the model output and hence on the prediction error. The regularization penalty, however, should prefer some weight configurations over others.
+In both cases, the weights will be shrunk relative to a standard regression, making them biased effect size estimates. However, this ``shrinkage'' makes it is possible to find unique and generalizable solutions in cases such as fMRI pattern classification where there are many more predictors (voxels) than examples to classify. Yet the L1- and L2-regularization strategies lead to dramatically different solutions. 
 
-If the data really are perfectly correlated, the LASSO penalty won't be any help: the sum of the absolute value of the coefficients is the same for models that place a 1 on each unit versus models that put a 4 on one unit and zeroes on the rest. If we imagine, however, that all measurements are subject to some independent noise, the scenario is a bit different. In this case, one of the 4 units will, just by chance, covary slightly better with the category labels. In this case, the classifier can do a slightly better job of minimizing the error term by loading up all of the weight on this single voxel. Thus the joint optimization will lead to a solution where just one (or perhaps a few) of the redundant voxels are selected. Ridge regression behaves very differently. Here the penalty scales exponentially as weights increase on a single voxel, but only linearly as weights are added across voxels. Thus the penalty is minimized by placing small weights on many voxels. In the preceding example, placing a weight of 4 on one unit and 0 on the remaining 3 leads to a total penalty of 16 over the 4 units. Placing a weight of 1 on each unit, in contrast, leads to a penalty of 4. Ridge regression thus prefers solutions where small weights are ``spread out'' over redundant predictors. In fact, as the weight approaches zero, the ridge penalty becomes vanishingly small, so ridge regression will always place a tiny weight on any predictor that carries even very weak information about the label. In real data, of course, voxel states are never perfectly correlated nor perfectly informative about the condition label, so the behaviors of the two approaches are less easy to intuit. In general, however, it is useful to think of LASSO as minimizing prediction error with the {\em fewest} possible predictors (ie, as many zero coefficients as possible), while ridge regression can be viewed as ``spreading'' small weights over all predictors exhibiting any systematic relationship with the category labels, without care for the number of predictors. 
+% In both cases, any predictor that carries no information at all about the category label should receive a zero weight, since this minimizes the predictor's contribution to the regularization penalty and without affecting the prediction error.
+% % % CRC: I think the above is not quite what we should say---if a predictor carried no information and normal regression put a large weight on it, this would lead to prediction error. So, in well-defined problem spaces, a normal regression should assign a small weight to an unpredictive regressor as well. It will not set it to zero, but neither will ridge. For that reason, I think the above is a little confusing.
 
-What assumptions do these approaches then bring about the nature of the underlying representation? Let's first consider the univariate assumptions: 
+% In this sense, both methods can be viewed as ``weeding out'' irrelevant predictors. Apart from this similarity, however, the penalties behave very differently.
+% % % CRC: In light of the fact that we argue later that ridge does not produce interpretable importance maps precisely because it does not weed things out, I think this is also now what we want to say.
+
+L1 regularization (LASSO) is penalized equally for increasing the weight on one unit by $2$ or two units by $1$ each. This would seem to lead to an ambiguity, but in fact there is a clearly optimal choice in this case, and it depends on the redundancy of the information contributed by the two units. If they are highly redundant, LASSO will make the decision to assign a weight of zero to whichever one contributes more unique information and {\em reduce} the penalty.
+
+L2 regularization (ridge regression) makes exactly the opposite decision in this case. This is because changes to individual weights are punished {\em exponentially} in ridge regression, but each weight's contribution to the total regularizer penalty is aggregated {\em linearly}. Thus, assigning a weight of $2$ to one unit contributes $4$ to the overall penalty, but assigning a weight of $1$ to two units contributes only $2$. This means that the penalty is best managed by ``spreading'' weight over redundant units, rather than dropping them.
+
+The L2 penalty has a catch, however. Just as penalty for increasing a weight increases as the magnitude of the weight increases, the reduction in penalty for shrinking a weight {\em decreases} as the magnitude decreases. Thus, a weight of $0.1$ contributes $0.01$ to the penalty, a weight of $0.01$ contributes $0.0001$, $0.001$ contributes $0.000001$, and so on. The reduction in penalty approaches zero much faster than the weight, and so L2 regularization will never actually assign a zero weight. This means ridge regression does not perform feature selection.
+
+%  To understand why, it is useful to consider how they treat sets of predictors that covary together with one another. Imagine 4 voxels whose responses across items are perfectly correlated, and suppose their activations are useful in predicting the condition label. In this scenario, there are many different ways of placing weights over the 4 voxels that will all have the same effect on the classifier output. For instance, placing a weight of 1 on each voxel will have exactly the same effect as placing a weight of 4 on one voxel and a weight of 0 on the other three. Because the voxel activations are perfectly correlated, and the classifier operates on a weighted sum over voxel activations, these different weight configurations have the same effect on the model output and hence on the prediction error. The regularization penalty, however, should prefer some weight configurations over others.
+
+%If the data really are perfectly correlated, the LASSO penalty won't be any help: the sum of the absolute value of the coefficients is the same for models that place a 1 on each unit versus models that put a 4 on one unit and zeroes on the rest. If we imagine, however, that all measurements are subject to some independent noise, the scenario is a bit different. In this case, one of the 4 units will, just by chance, covary slightly better with the category labels. In this case, the classifier can do a slightly better job of minimizing the error term by loading up all of the weight on this single voxel. Thus the joint optimization will lead to a solution where just one (or perhaps a few) of the redundant voxels are selected. Ridge regression behaves very differently. Here the penalty scales exponentially as weights increase on a single voxel, but only linearly as weights are added across voxels. Thus the penalty is minimized by placing small weights on many voxels. In the preceding example, placing a weight of 4 on one unit and 0 on the remaining 3 leads to a total penalty of 16 over the 4 units. Placing a weight of 1 on each unit, in contrast, leads to a penalty of 4. Ridge regression thus prefers solutions where small weights are ``spread out'' over redundant predictors. In fact, as the weight approaches zero, the ridge penalty becomes vanishingly small, so ridge regression will always place a tiny weight on any predictor that carries even very weak information about the label. In real data, of course, voxel states are never perfectly correlated nor perfectly informative about the condition label, so the behaviors of the two approaches are less easy to intuit. In general, however, it is useful to think of LASSO as minimizing prediction error with the {\em fewest} possible predictors (ie, as many zero coefficients as possible), while ridge regression can be viewed as ``spreading'' small weights over all predictors exhibiting any systematic relationship with the category labels, without care for the number of predictors. 
+
+In summary, LASSO can be understood as trying to achieve the best classification with the fewest number of units, and ridge regression can be understood as ``spreading'' small weights over all predictors exhibiting any systematic relationship with the category labels, without care for the number of units. What assumptions do these approaches then bring about the nature of the underlying representation? Let's first consider the univariate assumptions: 
 
 \begin{enumerate}
 \item Localization within individuals: Both methods operate on all voxels at once and are blind to anatomical relations among voxels, so no localization is assumed.
