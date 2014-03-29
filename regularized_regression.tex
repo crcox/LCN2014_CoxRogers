@@ -30,14 +30,14 @@ The additional penalty or {\em regularizer} represented by $h(\beta)$ essentiall
 We here consider two varieties of regularized logistic regression recently employed in the fMRI literature: {\em LASSO} and {\em ridge regression} \cite{riggall_relationship_2012,rish_sparse_2012}. Though superficially similar, the two methods embody different implicit assumptions about the nature of the underlying signal and so yield quite different results. In LASSO, the regularizer is the L1-norm of the coefficients, that is, the sum of their absolute values:
 
 \begin{align}
-h(\beta) = \sum^m_{j=1} abs(\beta_i)
+h(\beta) = \sum^m_{j=1} abs(\beta_j)
 \label{eq.lasso}
 \end{align}
 
 For ridge regression, the penalty is the L2-norm of the coefficients, that is, the sum of their squared values:
 
 \begin{align}
-h(\beta) = \sum^m_{j=1}\beta_i^2
+h(\beta) = \sum^m_{j=1}\beta_j^2
 \label{eq.ridge}
 \end{align}
 
@@ -53,7 +53,7 @@ L1 regularization (LASSO) is penalized equally for increasing the weight on one 
 
 L2 regularization (ridge regression) makes exactly the opposite decision in this case. This is because changes to individual weights are punished {\em exponentially} in ridge regression, but each weight's contribution to the total regularizer penalty is aggregated {\em linearly}. Thus, assigning a weight of $2$ to one unit contributes $4$ to the overall penalty, but assigning a weight of $1$ to two units contributes only $2$. This means that the penalty is best managed by ``spreading'' weight over redundant units, rather than dropping them.
 
-The L2 penalty has a catch, however. Just as penalty for increasing a weight increases as the magnitude of the weight increases, the reduction in penalty for shrinking a weight {\em decreases} as the magnitude decreases. Thus, a weight of $0.1$ contributes $0.01$ to the penalty, a weight of $0.01$ contributes $0.0001$, $0.001$ contributes $0.000001$, and so on. The reduction in penalty approaches zero much faster than the weight, and so L2 regularization will never actually assign a zero weight. This means ridge regression does not perform feature selection.
+The L2 penalty has a catch, however. Just as the penalty for increasing a weight increases exponentially, the {\em reduction} in penalty for shrinking a weight {\em decreases} as the weight shrinks. Thus, a weight of $0.1$ contributes $0.01$ to the penalty, a weight of $0.01$ contributes $0.0001$, $0.001$ contributes $0.000001$, and so on. The reduction in penalty approaches zero much faster than the weight, and so L2 regularization will never actually assign a zero weight. This means ridge regression does not perform feature selection.
 
 %  To understand why, it is useful to consider how they treat sets of predictors that covary together with one another. Imagine 4 voxels whose responses across items are perfectly correlated, and suppose their activations are useful in predicting the condition label. In this scenario, there are many different ways of placing weights over the 4 voxels that will all have the same effect on the classifier output. For instance, placing a weight of 1 on each voxel will have exactly the same effect as placing a weight of 4 on one voxel and a weight of 0 on the other three. Because the voxel activations are perfectly correlated, and the classifier operates on a weighted sum over voxel activations, these different weight configurations have the same effect on the model output and hence on the prediction error. The regularization penalty, however, should prefer some weight configurations over others.
 
