@@ -1,13 +1,29 @@
-\begin{tabular}{l c c c c c c c}
+\begin{tabular}{p{.2\textwidth} p{.25\textwidth} l l l l l}
 \toprule
- &\multicolumn{2}{c}{Local}&\multicolumn{2}{c}{Consistent}& & & \\
- \cmidrule{2-3} \cmidrule{4-5}
- & between & within & between & within & Independent& Sparse & Redundant \\
- \midrule
-UC & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & NA & NA \\
-SL & \checkmark & \checkmark & & & \checkmark & NA & NA \\
-R & & & & & & & \checkmark \\
-L & & & & & & \checkmark & \\
-SOS & \checkmark & \checkmark & & & & \checkmark & \\
+Assumption & Description & Univariate & Searchlight & LASSO & Ridge & SOS LASSO \\
+\midrule
+\Assumption{1} & \Description{1} & \checkmark & & & & \\
+\Assumption{2} & \Description{2} & \checkmark & & & & \\
+\Assumption{3} & \Description{3} & \checkmark & & & & \\
+\Assumption{4} & \Description{4} & \checkmark & & & & \\
+\Assumption{5} & \Description{5} & \checkmark & & & & \\
+\Assumption{6} & \Description{6} & \checkmark & & & & \\
+\Assumption{7} & \Description{7} & \checkmark & & & & \\
 \bottomrule
 \end{tabular}
+
+
+%%OLD 
+%\begin{tabular}{l c c c c c c c}
+%\toprule
+% &\multicolumn{2}{c}{Local}&\multicolumn{2}{c}{Consistent}& & & \\
+% \cmidrule{2-3} \cmidrule{4-5}
+% & between & within & between & within & Independent& Sparse & Redundant \\
+% \midrule
+%UC & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & NA & NA \\
+%SL & \checkmark & \checkmark & & & \checkmark & NA & NA \\
+%R & & & & & & & \checkmark \\
+%L & & & & & & \checkmark & \\
+%SOS & \checkmark & \checkmark & & & & \checkmark & \\
+%\bottomrule
+%\end{tabular}
