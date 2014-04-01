@@ -3,8 +3,12 @@
 **/.Rhistory
 **/.Rdata
 **/*.RDAT
+**/*.mat
+**/*.zip
 **/*.pdf
 **/*.png
+*.pdf
+*.png
 *.aux
 *.glo
 *.idx

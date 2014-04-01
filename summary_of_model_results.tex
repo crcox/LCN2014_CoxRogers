@@ -1,15 +1,15 @@
 \subsection{Summary of model results}
-%\begin{table}
-%\input{tables/table_assumptions.tex}
-%\caption{A summary of the foundational assumptions of each method.}
-%\label{tab.assumptions}
-%\end{table}
-%
-%\begin{table}
-%\input{tables/table_modelresults.tex}
-%\caption{A summary of the answers for each method across the four central questions. {\em Depends} indicates cases where the %method can succeed depending on parameters, but the correct parameterization is difficult to discern.} 
-%\label{tab.modelresults}
-%\end{table}
+\begin{sidewaystable}
+\input{tables/table_assumptions.tex}
+\caption{A summary of the foundational assumptions of each method.  $\dagger$ SOS LASSO assumes locality within and between subjects in a very different way than the univariate and searchlight methods, which allows degrees of sparsity within and inconsistency between subjects. See the text for a full explanation.}
+\label{tab.assumptions}
+\end{sidewaystable}
+
+\begin{table}
+\input{tables/table_modelresults.tex}
+\caption{A summary of the answers for each method across the four central questions. $\dagger$ The success of the searchlight was contingent on model parameters that may be difficult to discern in practice. $\ddagger$ Ridge regression identifies all units as informative, including ones that in fact contain no information.} 
+\label{tab.modelresults}
+\end{table}
 
 %Table \ref{tab.assumptions} summarizes the assumptions underlying each statistical approach, while Table \ref{tab.modelresults} summarizes how each approach answers the four core questions. 
 Though unsurprising, it is nonetheless worth noting that each method succeeds best when the implicit assumptions it adopts are met in the data. Thus univariate contrast does exceedingly well identifying the I/O units, which in these simulations are always localized in the same way within and across individuals, and which adopt a consistent representational code within regions and across individuals. The SH units, which encode cleaner domain representations in a distributed manner, violate all of these assumptions and so are completely missed. Searchlight does well at detecting both systematic I/O and SH units, but only if the useful information is contained within the radius of a searchlight and is localized in the same way across individuals. LASSO performs modestly well at discovering SH units, but in assuming no consistency of any kind across model individuals, becomes highly susceptible to noise and so misses many important units. Ridge regression, in assuming highly redundant signal, spreads weights over all units, making the solution hard to decipher.
