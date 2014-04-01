@@ -4,30 +4,19 @@ The limitations of the searchlight method arise from the relationship between a 
 
 An alternative approach that avoids this tradeoff is to train a pattern classifier on the whole dataset simultaneously. While many classification algorithms exist, we are going to focus our attention on variants of logistic regression because they are at once easily interpretable, very powerful, and have the advantage of drawing upon intuitions one might have formed through experience with linear regression. Of particular note is that a regression model is composed of a set of weights, one per unit, that are tuned to make accurate predictions based on input from each unit. In a binary contrast of conditions A and B, where A events are labeled with 1 and B events are labeled with 0, positive weights on a unit suggest that higher unit activation provides evidence for condition A while negative weights suggest that higher activation provides evidence for condition B. Thus, the classifier cross-validation accuracy indicates if the weights correspond to true signal, and the weights themselves indicate how the underlying signal can be interpreted, all without making any assumptions about the anatomical relationships among the signal carrying voxels.
 
-Logistic regression is a generalization of linear regression, in which the model output is passed through the following transfer function before being compared to the item labels:
-
-% An alternative approach that avoids this tradeoff is to train a pattern classifier on the whole dataset simultaneously and to use the resulting statistical model (the set of weights learned by the classifier) to understand how each unit contributes to the overall solution. For instance, units with weights of zero contribute nothing to the classifier ``decision'' and so are identified as unimportant for the contrast of interest. Moreover the sign of the weight might indicate how units activations are to be interpreted. In a binary contrast of conditions A and B, where A events are labeled with 1 and B events are labeled with 0, then positive weights on a unit suggest that higher unit activation provides evidence for condition A while negative weights suggest that higher activation provides evidence for condition B. Thus the classifier cross-validation accuracy indicates whether the classifier has discovered true signal, and the weights indicate how the underlying signal can be interpreted, all without making any assumptions about the anatomical relationships among the signal carrying voxels.
-
-% One way to learn a set of weights that will Logistic regression provides one form of classifier that is a natural candidate for this sort of analysis. Standard logistic regression can be viewed as an optimization that seeks a set of coefficients (predictor weights) minimizing, across all items in the training data, the discrepancy between the model output and item labels. Let the item labels be represented by $y\in{\left\{0,1\right\}}$.  This discrepancy can be quantified by the logistic loss function:
+Fitting a logistic regression model involves finding coefficients that minimize the discrepancy between the true labels in $y \in{\{0,1\}}$ and the probabilities assigned by the model. This is typically measured by the logistic loss:
 
 \begin{align}
-f(z) = \frac{e^z}{1+e^{z}}
-\label{eq.logisticloss}
-\end{align}
-
-Where $z = \beta_0 + \beta_1X_{i 1} + \beta_2X_{i 2} + \dots +  \beta_nX_{i n} + \epsilon_{i}$---the model's linear response to a particular pattern of activity. Thus, $f(z)$ is a transformation of the linear response that can be interpreted as the probability that $y=1$ given the pattern of activity for the $i^{th}$ item. 
-%The vector $mathbf{z}$ will contain the predicted probabilities for all $n$ input patterns. 
-The goal of the optimization is to minimize the sum of squared differences between the true labels in $y \in{\{0,1\}}$ and the probabilities assigned by the model.
-
-\begin{align}
-\argmin_\beta \sum^{n}_{i=1}{\left(y_i-f\left( X_i\beta + \beta_0\right) \right)^2}
+\argmin_\beta \sum^{n}_{i=1}{\log(1 + e^{\bar{-y_i} X_i\beta})}
 \label{eq.logisticopt}
 \end{align}
+
+...where $\bar{y_i}$ is $-1$ when $y_i=0$ and $+1$ when $y_i=1$. This loss is minimized when the sign of the model's linear response $X_i\beta$ is positive for items labeled $y=1$ and negative for items labeled $y=0$.
 
 As noted previously, the problem is that there are infinite possible solutions to the minimization when there are more predictors than items. One needs a way of deciding which among these is most likely to uncover the real signal. {\em Regularized} regression provides one way of doing this. Such approaches seek to jointly minimize the logistic loss (i.e., error in prediction) plus an additional cost, itself a function of the coefficients:
 
 \begin{align}
-\argmin_\beta \sum^{n}_{i=1}{\left( y_i-f\left(  X_i\beta + \beta_0\right) \right) ^2} + \lambda h(\beta)
+\argmin_\beta \sum^{n}_{i=1}{\log(1 + e^{\bar{-y_i} X_i\beta})} + \lambda h(\beta)
 \label{eq.regularized}
 \end{align}
 
@@ -97,7 +86,7 @@ Logistic LASSO and ridge regression were conducted using glmnet (Friedman, Hasti
 \textbf{---Figure 6 about here---}
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{figures/lasso_only.eps}
+\includegraphics[width=1\textwidth]{figures/lasso_only.eps}
 \caption{\label{fig.lasso} The results from the three regularized regression analyses. Because the model weights themselves are biased estimates and on an arbitrary scale, the height of each bar corresponds to the number of times each unit was selected over subjects. Colored bars were selected more times than would be expected given the overall rate of unit selection. The blueness or redness of the bar conveys the proportion of the time each unit was assigned a positive weight over subjects. Positive weights mean that activation at that unit will push the model towards labeling the current item as belonging to domain A.}
 \end{figure}
 
@@ -130,7 +119,7 @@ In sum, LASSO yields the following answers to the four questions:
 \textbf{---Figure 8 about here---}
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{figures/ridge_only.pdf}
+\includegraphics[width=1\textwidth]{figures/ridge_only.eps}
 \caption{\label{fig.ridge} The results from the three regularized regression analyses. Because the model weights themselves are biased estimates and on an arbitrary scale, the height of each bar corresponds to the number of number of times each unit was selected over subjects. Colored bars were selected more times than would be expected given the overall rate of unit selection. The blueness or redness of the bar conveys the proportion of the time each unit was assigned a positive weight over subjects. Positive weights mean that activation at that unit will push the model towards labeling the current item as belonging to domain A.}
 \end{figure}
 

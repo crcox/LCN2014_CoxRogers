@@ -1,13 +1,37 @@
-\begin{tabular}{l c c c c c c c}
+\begin{tabular}{L{.25\textwidth} c c c c c}
 \toprule
- &\multicolumn{2}{c}{Identifies}& &\\
- \cmidrule{2-3}
- & SI/O & SH & Indicates & Needs Local \\
- \midrule
-UC & \checkmark & & \checkmark & \checkmark \\
-SL & \checkmark & \checkmark & & \checkmark \\
-R & \checkmark$^*$ & \checkmark$^*$ & \checkmark$^*$ & \\
-L & & \checkmark & \checkmark & \\
-SOS & \checkmark & \checkmark & \checkmark & \\
+Result         & Univariate  & Searchlight& LASSO      & Ridge      & SOS LASSO  \\
+\midrule
+\ModResults{1} &  \checkmark & \checkmark &            & \checkmark & \checkmark \\
+\ModResults{2} &             & \checkmark & \checkmark & \checkmark & \checkmark \\
+\ModResults{3} &  \checkmark &            & \checkmark & \checkmark & \checkmark \\
+\ModResults{4} &  \checkmark & \checkmark &            &            &            \\
 \bottomrule
 \end{tabular}
+
+%%% table_results_content.tex: 
+%\newcommand{\ModResults}[1]{
+% \switch[#1]
+%  \case{=1} Identifies SI/O units %
+%  \case{=2} Identifies HI/O units %
+%  \case{=3} Indicates unit-level contributions %
+%  \case{=4} Requires localized representation %
+% \endswitch  	
+%}
+
+
+
+
+%\begin{tabular}{l c c c c c c c}
+%\toprule
+% &\multicolumn{2}{c}{Identifies}& &\\
+% \cmidrule{2-3}
+% & SI/O & SH & Indicates & Needs Local \\
+% \midrule
+%UC & \checkmark & & \checkmark & \checkmark \\
+%SL & \checkmark & \checkmark & & \checkmark \\
+%R & \checkmark$^*$ & \checkmark$^*$ & \checkmark$^*$ & \\
+%L & & \checkmark & \checkmark & \\
+%SOS & \checkmark & \checkmark & \checkmark & \\
+%\bottomrule
+%\end{tabular}

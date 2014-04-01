@@ -8,9 +8,16 @@
 \usepackage{booktabs}
 \usepackage{rotating}
 \usepackage{setspace}
+\usepackage{array}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\DeclareDelayedFloatFlavor{sidewaystable}{table}
+\DeclareDelayedFloatFlavor{sidewaysfigure}{figure}
 
 \input{tables/table_assumptions_content.tex}
-
+%\input{tables/table_assumptions_caption.tex}
+\input{tables/table_results_content.tex}
+%\input{tables/table_results_caption.tex}
 \DeclareMathOperator*{\argmin}{arg\,min}
 
 % % % IMPORTANT % % %

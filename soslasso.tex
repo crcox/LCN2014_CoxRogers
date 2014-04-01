@@ -6,7 +6,15 @@ The final method we consider is a variant of LASSO that assumes a loose degree o
 
 The method works as follows. The voxels for each individual are first projected into a common anatomical reference space (without blurring). The space is divided into a 3-dimensional grid and, for each gridpoint, all voxels within radius $r$ are grouped together in a $set$. Each set thus contains a group of anatomically proximal voxels; each voxel belongs to multiple sets; and the sets overlap in the voxels they contain. The sets are thus analogous to searchlights. Rather than training separate classifiers for each set and subject, however, a regularized logistic classifier is trained on all the data together. In this case, the regularization penalty contains two terms. One term scales linearly with the number of sets included in the solution; the other is the standard LASSO penalty across all units:
 
-{\em equation here?}
+\begin{align}
+h(x) = \lambda\sum_{g}\left(  \alpha \sqrt{\sum_{i} w_{gi}^2} + (1-\alpha) \sum_{i} |w_{gi}| \right) 
+\end{align}
+\textbf{---Figure 9 about here---}
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{figures/sosloss_demo.eps}
+\caption{\label{fig.sosloss_demo} Visualization of how the SOS LASSO penalizes the selection of units that either all belong to one group or from separate groups. The weight on any active unit is assumed to be one. Printed equations are simplified, dropping terms that would be set to zero to highlight differences.}
+\end{figure}
 
 Overall, the joint optimization prefers solutions that (a) fit the training data by (b) finding units that belong to a small number of sets and (c) include a relatively small proportion of the units overall. The optimization places a separate weight on each unit for each individual, and in this sense allows for complete variability across individuals in how information is encoded. It also ``sees'' all units in the brain at once, and so can be sensitive to information distributed over several different anatomical regions. But, it prefers solutions where the informative features within an individual are situated in the same small number of sets across individuals, thus implementing the assumptions of loose localization within loose consistency of location across individuals. A mathematical analysis of \soslasso and some applications of its use were recently described by \cite{RaoNIPS} for linear regression and by \cite{RaoML} for logistic regression. 
 
@@ -30,13 +38,13 @@ Relative to other methods, \soslasso thus adopts the following assumptions about
 With these assumptions, how does the approach fare in analysis of model data?
 
 \subsubsection{Implementation} 
-The \soslasso analysis was implemented using custom code built on top of the MALSAR package\cite{zhou2012mutal} for \matlab. The data were divided into overlapping sets based on ``anatomical'' proximity. Each set included 5 units, and the sets overlapped with each other by 2 units. The set size was kept smaller than the smallest expected cluster of informative units in the localized data, but otherwise arbitrary. \soslasso has two free parameters, one controlling sparsity at the set level and one controlling overall sparsity. As in the previous analysis, these parameter values  were selected through an internal 5-fold cross-validation process, then a final model was trained with the best parameters and tested on a sixth hold-out set. Note that \soslasso is trained on all model subjects simultaneously, but produces a unique solution for each subject. Thus the results were analyzed in the same way as the LASSO and ridge regression results.
+The \soslasso analysis was implemented using custom code built on top of the MALSAR package\cite{malsar} for \matlab. The data were divided into overlapping sets based on ``anatomical'' proximity. Each set included 5 units, and the sets overlapped with each other by 2 units. The set size was kept smaller than the smallest expected cluster of informative units in the localized data, but otherwise arbitrary. \soslasso has two free parameters, one controlling sparsity at the set level and one controlling overall sparsity. As in the previous analysis, these parameter values  were selected through an internal 5-fold cross-validation process, then a final model was trained with the best parameters and tested on a sixth hold-out set. Note that \soslasso is trained on all model subjects simultaneously, but produces a unique solution for each subject. Thus the results were analyzed in the same way as the LASSO and ridge regression results.
 
 \subsubsection{Results}
 \textbf{---Figure 9 about here---}
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{figures/soslasso_only.eps}
+\includegraphics[width=1\textwidth]{figures/soslasso_only.eps}
 \caption{\label{fig.sos} The results from the three regularized regression analyses. Because the model weights themselves are biased estimates and on an arbitrary scale, the height of each bar corresponds to the number of number of times each unit was selected over subjects. Colored bars were selected more times than would be expected given the overall rate of unit selection. The blueness or redness of the bar conveys the proportion of the time each unit was assigned a positive weight over subjects. Positive weights mean that activation at that unit will push the model towards labeling the current item as belonging to domain A.}
 \end{figure}
 
