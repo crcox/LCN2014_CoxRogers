@@ -84,7 +84,7 @@ Logistic LASSO and ridge regression were conducted using glmnet (Friedman, Hasti
 
 \begin{figure}
 \centering
-\includegraphics[width=0.95\textwidth]{figures/lasso_only.eps}
+\includegraphics[width=0.95\textwidth]{figures/figure6.eps}
 \caption{The results from the LASSO analysis. The height of each bar indicates the number of times each unit was selected, that is, given a non-zero weight over subjects. Colored bars were selected more often than expected by chance given the overall rate of unit selection. The blueness or redness of the bar conveys the frequency with which each unit was assigned a positive weight over subjects. Positive weights mean that activation at that unit will push the model towards labeling the current item as belonging to domain A. Mean and se indicate the mean and standard error of the classifier accuracy, respectively; n indicates the number of units selected more often than chance across model subjects.}
 \label{fig.lasso} 
 \end{figure}
@@ -101,7 +101,7 @@ This summary plot is misleading in one sense, however, since it applies an aggre
 
 \begin{figure}
 \centering
-\includegraphics[width=0.6\textwidth]{figures/precision_plot.eps}
+\includegraphics[width=0.6\textwidth]{figures/figure7.eps}
 \caption{\label{fig.precision} Hit rate and precision for different multivariate methods, computed across the whole network (top), the I/O units only (middle), and the hidden units only (bottom).}
 \end{figure}
 
@@ -125,7 +125,7 @@ Finally, we can ask how well LASSO uncovers differences in the representational 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.95\textwidth]{figures/ridge_only.eps}
+\includegraphics[width=0.95\textwidth]{figures/figure8.eps}
 \caption{\label{fig.ridge} The results from the ridge regression analysis. Height of each bar indicates the mean across model subjects of the absolute value of the weight placed on each unit by the classifier. Bar hue indicates the frequency with which each unit received a positive weight across model subjects. Bar saturation indicates which units would count as ``selected'' under three different policies, based on weight magnitude. Bright bars are in the top third of the distribution, pale bars are in the middle third, and gray bars are in the bottom third. Mean and se indicate the mean and standard error of the classifier accuracy, respectively; n indicates the mean number of units with non-zero weights across model subjects.}
 \end{figure}
 
