@@ -1,20 +1,34 @@
 \newcommand{\Assumption}[1]{
  \switch[#1]
-  \case{=1} Independence of representational elements %
-  \case{=2} Discrete representation and functionality %
-  \case{=3} Homogeneity of representation within an across subjects %
-  \case{=4} Homogeneity of location within and across subjects %
-  \case{=5} Representation is sparse %
-  \case{=6} Representation is redundant %
+  \case{=1} Consistency of representation within ensemble %
+  \case{=2} Consistency of representation across individuals %
+  \case{=3} Localization of representation within individuals %
+  \case{=4} Localization of representation across individuals %
+  \case{=5} Voxel Independence %
+  \case{=6} Sparsity %
+  \case{=7} Redundancy %
  \endswitch  	
 }
 \newcommand{\Description}[1]{
  \switch[#1]
-  \case{=1} A given unit within a particular representation will respond to various stimuli in the same way across individuals. %
-  \case{=2} In any individual, anatomically neighboring units likely contribute to the same representation. %
-  \case{=3} Across individuals, the units that contribute to a given representation will be found in similar anatomical locations. %
-  \case{=4} The information coded by a unit activation does ot depend on the activation of other units. %
-  \case{=5} Of all units measures, only a small proportion will be involved in the representation of interest. %
-  \case{=6} The responses of units within a representation are highly correlated. %
+  \case{=1} All units in a representational ensemble response to object of representation in the same way. %
+  \case{=2} A given unit within a particular representation responds to various stimuli in the same way across individuals %
+  \case{=3} In any individual, anatomically neighboring units likely contribute to the same representation. %
+  \case{=4} Across individuals, the units the contribute to a given representation will be found in similar anatomical regions. %
+  \case{=5} The information coded by a unit activation does not differ depending on the activations of other units. %
+  \case{=6} Of all units measured, only a small proportion will be involved in the representation of interest. %
+  \case{=7} The responses of units with a representation are highly intercorrelated. %
  \endswitch  	
+}
+
+\newcommand{\Example}[1]{
+	\switch[#1]
+	\case{=1} Within an individual, all units representing faces will show greater mean activity for faces that for a control condition. %
+	\case{=2} A unit that represents faces with greater mean activity in one individual will also represent faces with greater mean activity in other individuals. %
+	\case{=3} Within an individual, a unit that shows systematically different responses for faces vs. other objects will have neighbors that also show systematically different responses for faces vs. other objects. %
+	\case{=4} Though the units that encode faces may be distributed anatomically within an individual, the same distributed regions in other individuals are also likely to contain units that encode face representations. %
+	\case{=5} Units that represent faces do not ``switch'' to representing something else when other units are active. %
+	\case{=6} Only a small proportion of all units measured will be involved in representing faces. %
+	\case{=7} Within an individual, the pattern of responses over items will be highly correlated for all units involved in face representation.  %
+	\endswitch  	
 }
