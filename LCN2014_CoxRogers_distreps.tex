@@ -22,7 +22,8 @@
 
 % % % IMPORTANT % % %
 % This will define the spelling of "SOS LASSO"
-\newcommand{\soslasso}{SOG LASSO } % trailing space required
+\newcommand{\soslasso}{SOS Lasso}
+\newcommand{\lasso}{Lasso}
 % This will define the formatting and punctuation of "MATLAB"
 \newcommand{\matlab}{MATLAB\textregistered }
 
@@ -33,7 +34,7 @@
 
 \input{abstract.tex}
 
-\authornote{We would like to acknowledge Nikhil Rao and Robert Nowak, for developing the SOS LASSO loss function and its \matlab  implementation, and Mark Seidenberg for valuable discussions of this work in its development.\\
+\authornote{We would like to acknowledge Nikhil Rao and Robert Nowak, for developing the {\soslasso} loss function and its \matlab  implementation, and Mark Seidenberg for valuable discussions of this work in its development.\\
 We have no conflicts of interest.
 }
 
@@ -43,7 +44,7 @@ We have no conflicts of interest.
 	Madison, WI 53706 \\
 }
 
-\keywords{distributed representations, PDP, MVPA, \soslasso, fMRI}
+\keywords{distributed representations, PDP, MVPA, {\soslasso}, fMRI}
 
 %%% BEGIN DOCUMENT
 \begin{document}
@@ -83,7 +84,7 @@ With this understanding of the model, we are now ready to consider how different
 
 \input{discussion.tex}
 
-%\bibliographystyle{/home/chris/texmf/tex/latex/apacite/apacite}
+%\bibliographystyle{/home/chris/texmf/tex/latex/apacite/apacit
 \bibliographystyle{apacite}
 \bibliography{MASTERBIB2/AuthorIDs,MASTERBIB2/Main,MASTERBIB2/ttr}
 
@@ -101,14 +102,14 @@ With this understanding of the model, we are now ready to consider how different
 %\begin{figure}
 %\centering
 %\includegraphics[width=0.5\textwidth]{figures/cmu_searchlight.eps}
-%\caption{\label{fig.cmu_searchlight} Information map yielded from applying searchlight to the Mitchell et al (2003) ``star-plus'' dataset, for one slice of the brain. The redness at each point indexes the number of times a searchlight centered on that voxel yielded above chance classification over subjects.}
+%\caption{\label{fig.cmu_searchlight} Information map yielded from applying searchlight to the Mitchell et al (2003) ``star-plus'' de}ataset, for one slice of the brain. The redness at each point indexes the number of times a searchlight centered on that voxel yielded above chance classification over subjects.}
 %\end{figure}
 %
 %\textbf{---Figure 8 about here---}
 %\begin{figure}
 %\centering
 %\includegraphics[width=.9\textwidth]{figures/cmu_regression.eps}
-%\caption{\label{fig.cmu_regression}  The information maps yielded from applying the three regularized regression analyses to the same ``star-plus'' dataset. Because the solutions are very sparse for LASSO and \soslasso, all voxels selected for any subject are plotted. The blueness or redness of the dots conveys the proportion of the time each unit was assigned a positive weight over subjects. Positive weights mean that activation at that unit will push the model towards labeling the current item as belonging to domain A.}
+%\caption{\label{fig.cmu_regression}  The information maps yielded from applying the three regularized regression analyses to the same ``star-plus'' dataset. Because the solutions are very sparse for {\lasso} and {\soslasso}, all voxels selected for any subject are plotted. The blueness or redness of the dots conveys the proportion of the time each unit was assigned a positive weight over subjects. Positive weights mean that activation at that unit will push the model towards labeling the current item as belonging to domain A.}
 %\end{figure}
 
 

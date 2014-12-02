@@ -55,14 +55,4 @@ The second thing to note is that the searchlight analysis does a much poorer job
 
 In sum, the method deals with the over-fitting problem by only including a small number of contiguous voxels in each classifier---an approach which assumes that useful representational structure can be localized within the searchlight radius, in the same locations across subjects. When these assumptions are met, the approach does a good job of discovering representational structure, even if the representational code (i.e., the way that individual units respond to particular stimuli) is highly variable within and across individuals. The limitations noted above arise when the assumptions are violated---when representational structure is anatomically distributed across multiple searchlights (as when searchlights are too small in the localized case), or in different ways across individuals (as in the dispersed model). Moreover, whether the assumptions are met depends, not only upon the anatomical distribution of the signal, but also upon the searchlight size, and it is not clear how the latter can be optimized for real brain imaging data.  
 
-Finally, it is worth noting that, in contrast to the univariate method, the searchlight approach does not provide information about how the contrast of interest in encoded in unit activations. Thus there is no way for the method to show, for instance, that there are some units systematically more active for A items than B items, others showing the reverse pattern, and still others that express the A/B distinction in a distributed code (the SH units). These results are summarized in Table \ref{tab.modelresults}.
-
-%Returning to the central questions, we get the following answers:
-%
-%\begin{enumerate}
-%\item {\bf Does the method reliably identify the systematic I/O units?} Yes, though results vary substantially with searchlight size.
-%\item {\bf Does the method reliably identify the systematic hidden units?} Yes, when they are anatomically localized and when the searchlight is not too large.
-%\item {\bf Does the method indicate how the information of interest is coded across identified units?} No.
-%\item {\bf Do method results depend on anatomical localization of signal-carrying units?} Yes: performance declines substantially when signal-carrying units are anatomically dispersed.
-%\end{enumerate}
-%
+Finally, it is worth noting that, in contrast to the univariate method, the searchlight approach does not provide information about how the contrast of interest in encoded in unit activations. Thus there is no way for the method to show, for instance, that there are some units systematically more active for A items than B items, others showing the reverse pattern, and still others that express the A/B distinction in a distributed code (the SH units). These results are summarized in Table \ref{tab.assumptions}.
