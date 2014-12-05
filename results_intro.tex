@@ -1,0 +1,10 @@
+\section{Results}
+
+With this understanding of the model, we are now ready to consider how different statistical methods for fMRI fare at discovering the model units that encode representations of the two domains, both in the case where the hidden units are anatomically localized and when they are anatomically dispersed. The methods we consider include the standard univariate contrast method and four forms of multivariate pattern classification (MVPC). Each method faces the challenges inherent in fMRI analysis---that of finding meaningful signal within a vast amount of quite noisy data. To address the challenge, each method adopts a different set of assumptions about the nature of the underlying signal, and so brings with it biases in the kinds of results it yields. For each method, we will begin with a brief exposition of the basic logic and essential concepts and will explicitly note the underlying representational assumptions. We then report the implementational details and results of the analysis, with the aim of answering four questions:
+
+\begin{enumerate}
+\item Does the method identify the systematic I/O units, but not arbitrary units, as important for domain representation?
+\item Does the method identify the systematic hidden units, but not arbitrary units, as important for the domain representation?
+\item Do the results differ when hidden units are anatomically localized versus dispersed?
+\item Does the method indicate differences in how the information of interest is coded across unit sets? Specifically, does it indicate that some units respond more to A items than to B items, others show the reverse pattern, and still others express the A/B distinction with a distributed code? 
+\end{enumerate}
