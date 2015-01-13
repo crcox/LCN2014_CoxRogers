@@ -11,11 +11,11 @@ From this brief description we can see that the method relies on five assumption
 %	\textbf{---Table \ref{tab.assumptions} about here---}
 %\end{center}
 
-\begin{sidewaystable}[ph!]
+\begin{sidewaystable*}[ph!]
 	\input{tables/table_assumptions.tex}
 	\caption{Assumptions implicitly adopted by different statistical methods for image analysis.}
 	\label{tab.assumptions}
-\end{sidewaystable}
+\end{sidewaystable*}
 
 \subsubsection{Implementation}
 The activity at each unit was modeled simultaneously for all subjects in a mixed effects model that treated subject as a random factor \cite{chen_linear_2013, friston_mixed-effects_2005} using the lme4 package in R \cite{bates_linear_2013}. Each model contains a single regressor, coding whether each item is an example of category A or B. The coefficients obtained from the mixed effects model were tested for significance using the Kenward-Roger approximation for the degrees of freedom \cite{kenward_small_1997} and a standard F-test, numerator degrees of freedom = 1, denominator degrees of freedom = 9. The results are directly analogous to a repeated-measures ANOVA. The criterion for significance, alpha, is corrected to control the false discovery rate at q<0.05. The analysis was conducted for both the anatomically localized and the dispersed model. In both cases, the data were spatially smoothed, taking a weighted average over a three unit window, where the center unit was weighted about twice as much as the two flanking units.
@@ -29,12 +29,12 @@ Figure \ref{fig.univariate} shows the results of applying the univariate method 
 %\textbf{---Figure \ref{fig.univariate} about here---}
 %\end{center}
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=0.75\textwidth]{figures/figure4.eps}
 \caption{Results from the univariate analysis of simulated data. Bar height indicates the absolute value of the $t$ statistic for the unit-wise contrast between conditions at the group level. Colored bars indicate units showing significant differences with p-values corrected to control the false discovery rate at $q<0.05$. The red-blue scale indicates the direction of the contrast effect across model subjects, with red indicating units consistently showing greater activation for A items.}
 \label{fig.univariate} 
-\end{figure}
+\end{figure*}
 
 In both localized and dispersed cases, the univariate contrast method identifies systematic I/O units as important for representing the A/B distinction, and correctly indicates that different subsets of input units code this information differently (some responding more to A than B and others showing the opposite pattern). Note that these are the units for which the five univariate assumptions about representation listed in Table \ref{tab.assumptions} are all valid. In both localized and dispersed cases, however, the analysis completely misses the systematic hidden units, even though these jointly encode a cleaner representation of the A/B domain structure. The failure arises because, in both cases, the univariate assumptions are invalid. When hidden units are localized, assumptions 2 and 4 are violated: the way individual units encode information can vary across SH units in the same model individual, and across individuals at the same anatomical location. When the units are anatomically dispersed, assumption 3 is also invalid: the representation is coded in different anatomical locations across individuals. Because of these departures from the statistical assumptions, the mean activation of a unit at a given anatomical location across individuals does not differ reliably for SH units, even though these do reliably encode the domain distinction in each individual. These results are summarized in the column labeled ``univariate'' in Table \ref{tab.modelresults}.
 

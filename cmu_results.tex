@@ -15,16 +15,16 @@ Classifier accuracy was determined via 10-fold cross-validation. Examples that b
 
 \subsection{Results}
 
-\begin{center}
-\textbf{---Figure \ref{fig.brain} about here---}
-\end{center}
+%\begin{center}
+%\textbf{---Figure \ref{fig.brain} about here---}
+%\end{center}
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=.8\textwidth]{figures/figure10.eps}
 \caption{Results from applying different multivariate methods to the star-plus fMRI dataset. (A) The information maps yielded by applying different multivariate methods to the same ``star-plus'' dataset. Because the solutions are very sparse for {\lasso} and {\soslasso}, all voxels selected for any subject are plotted. For ridge regression, the plot shows voxels selected across all subjects under a lax and an aggressive elimination policy. For LASSO, ridge, and {\soslasso}, the blueness or redness of the dots conveys the proportion of the time each unit was assigned a positive weight over subjects. (B) Mean and standard error of the classifier cross-validation accuracy for each method across subjects in the star-plus dataset.}
 \label{fig.brain}  
-\end{figure}
+\end{figure*}
 
 All methods exhibited significant above-chance cross-validation accuracy, indicating that they all discover some reliable structure. Figure \ref{fig.brain} presents the mean cross-validation accuracy of each method along with aggregate images of the brain regions identified as encoding useful structure by the different methods within one representative slice of the brain.  Identified voxels are aggregated across the Z plane and projected on a single horizontal section taken through the middle of the temporal lobe, with anterior regions toward the top. 
 

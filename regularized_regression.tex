@@ -84,12 +84,12 @@ Logistic {\lasso} and ridge regression were conducted using {\glmnet} (Friedman,
 %\textbf{---Figure \ref{fig.lasso} about here---}
 %\end{center}
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=0.95\textwidth]{figures/figure6.eps}
 \caption{The results from the {\lasso} analysis. The height of each bar indicates the number of times each unit was selected, that is, given a non-zero weight over subjects. Colored bars were selected more often than expected by chance given the overall rate of unit selection. The blueness or redness of the bar conveys the frequency with which each unit was assigned a positive weight over subjects. Positive weights mean that activation at that unit will push the model towards labeling the current item as belonging to domain A. Mean and se indicate the mean and standard error of the classifier accuracy, respectively; n indicates the number of units selected more often than chance across model subjects.}
 \label{fig.lasso} 
-\end{figure}
+\end{figure*}
 
 For {\lasso}, interpretation of the classifier coefficients is straightforward: the method places zero weights on as many predictors as possible, so any unit receiving a non-zero weight can be viewed as having been ``selected'' by the classifier as important. If the classifier shows above-chance cross-validation accuracy, we can be certain that it has successfully identified signal-carrying units. In contrast to the preceding methods, there is no statistical test performed on a null hypothesis at each unit. Instead, any selected unit in a given model individual can be viewed as ``significant'' for the representation because, if it could be discarded without affecting classifier performance, {\lasso} would have done so. In this sense, for each subject, the method can be viewed as finding the {\em smallest sufficient set} for classification. The central questions then are (1) how well does the selected set pick out the signal-carrying voxels in I/O and hidden layers, (2) do the classifier weights indicate differences in how information is encoded for different voxel sets and (3) do the results differ for localized versus dispersed model variants?
 
@@ -101,11 +101,11 @@ This summary plot is misleading in one sense, however, since it applies an aggre
 %\textbf{---Figure \ref{fig.precision} about here---}
 %\end{center}
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=0.55\textwidth]{figures/figure7.eps}
 \caption{\label{fig.precision} Hit rate and precision for different multivariate methods, computed across the whole network (top), the I/O units only (middle), and the hidden units only (bottom).}
-\end{figure}
+\end{figure*}
 
 Figure \ref{fig.precision} shows the mean of these figures across model individuals for {\lasso} (and other methods). The general pattern is clear: precision is relatively high, indicating that most of the units {\lasso} identifies are indeed signal-carrying units. {\lasso} is sub-optimal, however, in the hit rate: for the hidden layer, about half the important units are missed, while the great majority of signal-carrying units are missed in the I/O layer. Thus if {\lasso} selects a unit, one can have confidence that it does carry useful information, but one cannot have confidence that it has discovered all the useful elements.
 
@@ -125,11 +125,11 @@ Finally, we can ask how well {\lasso} uncovers differences in the representation
 %\textbf{---Figure \ref{fig.ridge} about here---}
 %\end{center}
 
-\begin{figure}[b]
+\begin{figure*}
 \centering
 \includegraphics[width=0.95\textwidth]{figures/figure8.eps}
 \caption{\label{fig.ridge} The results from the ridge regression analysis. Height of each bar indicates the mean across model subjects of the absolute value of the weight placed on each unit by the classifier. Bar hue indicates the frequency with which each unit received a positive weight across model subjects. Bar saturation indicates which units would count as ``selected'' under three different policies, based on weight magnitude. Bright bars are in the top third of the distribution, pale bars are in the middle third, and gray bars are in the bottom third. Mean and se indicate the mean and standard error of the classifier accuracy, respectively; n indicates the mean number of units with non-zero weights across model subjects.}
-\end{figure}
+\end{figure*}
 
 The ridge regression classifier showed marginally better cross-validation accuracy (0.65 compared to 0.6 for {\lasso}), but with a very different distribution of weights. In fact, ridge regression placed a non-zero weight on every unit---effectively using the whole pattern of activation across all units in the network. Consequently it is difficult to know which predictors are playing an important role in the classifier behavior and which are not. Weight size (i.e., absolute value of a weight) provides one indicator of predictor importance, since the regularization penalty tries to keep weights as close to zero as possible. Any predictor receiving a weight that deviates strongly from zero must, therefore, be important for reducing prediction error. But this relationship is not perfectly transparent. Consider the case where a single unit carries important information for classifying one subset of items, while ten highly redundant units all carry information important for classifying another subset. In some sense all 11 units are equally informative for the classifier, but ridge regression will place a large weight on the singleton unit and many small weights across the ten redundant units. That is, the weight size under ridge is sensitive to both the informativeness of the unit activation and its redundancy with other units. Highly redundant units can receive quite small weights even if they carry useful information. For these reasons it is not clear, in the model and more so in real data, just how strong or weak a weight must be to ``count'' as having been selected by the classifier. 
 

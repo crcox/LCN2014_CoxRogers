@@ -29,7 +29,7 @@ The function has two terms, $\sqrt{\sum{\mathbf{W}^2_{si}}}$ and $\sum{|\mathbf{
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/soslasso_loss_example.eps}
+	\includegraphics[width=0.45\textwidth]{figures/soslasso_loss_example.eps}
 	\caption{A schematic laying out two hypothetical solutions, and the {\em set penalty} they incur. The set penalty is one of the components of the {\soslasso} regularizer. Note that in cases of overlap, the weight will be accounted for only once, as belonging to the set in which it increases the penalty by the smallest amount. In other words, {\soslasso} will consolidate weights into as few groups as possible.}
 	\label{fig.soslossex} 
 \end{figure}
@@ -61,12 +61,12 @@ The {\soslasso} analysis was implemented using custom code built on top of the M
 %\textbf{---Figure \ref{fig.sos} about here---}
 %\end{center}
 
-\begin{figure}[b]
+\begin{figure*}
 \centering
 \includegraphics[width=0.95\textwidth]{figures/figure9.eps}
 \caption{The results from the {\soslasso} analysis. The height of each bar corresponds to the number of times each unit was selected over subjects. Colored bars were selected more times than would be expected given the overall rate of unit selection. The blueness or redness of the bar conveys the frequency with which each unit was assigned a positive weight over subjects. Positive weights mean that activation at that unit will push the model towards labeling the current item as belonging to domain A. Mean and se indicate the mean and standard error of the classifier accuracy, respectively; n indicates the number of units selected more often than chance across model subjects.}
 \label{fig.sos} 
-\end{figure}
+\end{figure*}
 
 The first point of note is that the {\soslasso} classifier showed a mean cross-validation accuracy across subjects of 0.82 in both the localized and anatomically dispersed model variants---much higher than searchlight, {\lasso}, and ridge regression, all of which showed accuracies between 0.6--0.65. This stark difference suggests that {\soslasso} is able to exploit cross-subject consistency in the location of useful units to better find the informative signal in individual models.
 
@@ -82,11 +82,11 @@ Finally, with regard to laying bare the representational code, {\soslasso} perfo
 
 These results provide answers to our core questions, summarized in Table \ref{tab.modelresults}.
 
-\begin{table}[t]
+\begin{table*}[t]
 	\input{tables/table_modelresults.tex}
 	\caption{A summary of the answers for each method across the four central questions. $\dagger$ The success of the searchlight was contingent on model parameters that may be difficult to discern in practice. $\ddagger$ Ridge regression identifies all units as informative, including ones that in fact contain no information.} 
 	\label{tab.modelresults}
-\end{table}
+\end{table*}
 
 %\begin{center}
 %	\textbf{--- Table \ref{tab.modelresults} about here---}
