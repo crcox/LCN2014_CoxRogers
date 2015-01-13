@@ -7,11 +7,11 @@ The univariate contrast method thus favors the discovery of clusters of anatomic
 
 From this brief description we can see that the method relies on five assumptions about the nature of the neuro-cognitive representations, summarized in the ``univariate'' column of Table \ref{tab.assumptions}.
 
-\begin{center}
-	\textbf{---Table \ref{tab.assumptions} about here---}
-\end{center}
+%\begin{center}
+%	\textbf{---Table \ref{tab.assumptions} about here---}
+%\end{center}
 
-\begin{sidewaystable}
+\begin{sidewaystable}[ph!]
 	\input{tables/table_assumptions.tex}
 	\caption{Assumptions implicitly adopted by different statistical methods for image analysis.}
 	\label{tab.assumptions}
@@ -22,18 +22,19 @@ The activity at each unit was modeled simultaneously for all subjects in a mixed
 
 \subsubsection{Results} 
 
-\begin{center}
-\textbf{---Figure \ref{fig.univariate} about here---}
-\end{center}
+
+Figure \ref{fig.univariate} shows the results of applying the univariate method to the localized (left) and dispersed (right) models. In these plots, each bar corresponds to a single unit in the model. The bars are ordered according to their functional role in the network, as indicated by the X-axis labels. Colored bars indicate units showing statistically significant differences in mean activation across model individuals, while grey bars indicate units that did not show significant differences. Among the colored bars, red indicates units where activation was systematically higher for domain A across models, and blue indicates units where activation was systematically higher for domain B. Note that, in the anatomically dispersed plot (right), the units are shown in their standard functional location for ease of interpretation.
+
+%\begin{center}
+%\textbf{---Figure \ref{fig.univariate} about here---}
+%\end{center}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.95\textwidth]{figures/figure4.eps}
+\includegraphics[width=0.75\textwidth]{figures/figure4.eps}
 \caption{Results from the univariate analysis of simulated data. Bar height indicates the absolute value of the $t$ statistic for the unit-wise contrast between conditions at the group level. Colored bars indicate units showing significant differences with p-values corrected to control the false discovery rate at $q<0.05$. The red-blue scale indicates the direction of the contrast effect across model subjects, with red indicating units consistently showing greater activation for A items.}
 \label{fig.univariate} 
 \end{figure}
-
-Figure \ref{fig.univariate} shows the results of applying the univariate method to the localized (left) and dispersed (right) models. In these plots, each bar corresponds to a single unit in the model. The bars are ordered according to their functional role in the network, as indicated by the X-axis labels. Colored bars indicate units showing statistically significant differences in mean activation across model individuals, while grey bars indicate units that did not show significant differences. Among the colored bars, red indicates units where activation was systematically higher for domain A across models, and blue indicates units where activation was systematically higher for domain B. Note that, in the anatomically dispersed plot (right), the units are shown in their standard functional location for ease of interpretation.
 
 In both localized and dispersed cases, the univariate contrast method identifies systematic I/O units as important for representing the A/B distinction, and correctly indicates that different subsets of input units code this information differently (some responding more to A than B and others showing the opposite pattern). Note that these are the units for which the five univariate assumptions about representation listed in Table \ref{tab.assumptions} are all valid. In both localized and dispersed cases, however, the analysis completely misses the systematic hidden units, even though these jointly encode a cleaner representation of the A/B domain structure. The failure arises because, in both cases, the univariate assumptions are invalid. When hidden units are localized, assumptions 2 and 4 are violated: the way individual units encode information can vary across SH units in the same model individual, and across individuals at the same anatomical location. When the units are anatomically dispersed, assumption 3 is also invalid: the representation is coded in different anatomical locations across individuals. Because of these departures from the statistical assumptions, the mean activation of a unit at a given anatomical location across individuals does not differ reliably for SH units, even though these do reliably encode the domain distinction in each individual. These results are summarized in the column labeled ``univariate'' in Table \ref{tab.modelresults}.
 

@@ -46,7 +46,7 @@ In both cases, the optimization is convex: for a given value of $\lambda$, there
 
 If the data really are perfectly correlated, the {\lasso} penalty won't be any help: the sum of the absolute value of the coefficients is the same for models that place a 1 on each unit versus models that put a 4 on one unit and zeroes on the rest. If we imagine, however, that all measurements are subject to some independent noise, the scenario is a bit different. In this case, one of the 4 units will, just by chance, covary slightly better with the category labels. In this case, the classifier can do a slightly better job of minimizing the error term by loading up all of the weight on this single voxel. Thus the joint optimization will lead to a solution where just one (or perhaps a few) of the redundant voxels are selected. 
 
-Ridge regression behaves very differently. Here the penalty scales exponentially as weights increase on a single voxel, but only linearly as weights are added across voxels. Thus the penalty is minimized by placing small weights on many voxels. In the preceding example, placing a weight of 4 on one unit and 0 on the remaining 3 leads to a total penalty of 16 over the 4 units. Placing a weight of 1 on each unit, in contrast, leads to a penalty of 4. Ridge regression thus prefers solutions where small weights are ``spread out'' over redundant predictors. In fact, as the weight approaches zero, the ridge penalty becomes vanishingly small, so with a finite number of training examples, ridge regression will always place at least a tiny weight on every predictor. In real data, of course, voxel states are never perfectly correlated nor perfectly informative about the condition label, so the behaviors of the two approaches are less easy to intuit. In general, however, it is useful to think of {\lasso} as minimizing prediction error with the {\em fewest} possible predictors (ie, as many zero coefficients as possible), while ridge regression can be viewed as ``spreading'' small weights over all predictors exhibiting any systematic relationship with the category labels, without care for the number of predictors. 
+Ridge regression behaves very differently. Here the penalty scales exponentially as weights increase on a single voxel, but only linearly as weights are added across voxels. Thus the penalty is minimized by placing small weights on many voxels. In the preceding example, placing a weight of 4 on one unit and 0 on the remaining 3 leads to a total penalty of 16 over the 4 units. Placing a weight of 1 on each unit, in contrast, leads to a penalty of 4. Ridge regression thus prefers solutions where small weights are ``spread out'' over redundant predictors. In fact, as the weight approaches zero, the ridge penalty becomes vanishingly small, so with a finite number of training examples, ridge regression will always place at least a tiny weight on every predictor. In real data, of course, voxel states are never perfectly correlated nor perfectly informative about the condition label, so the behaviors of the two approaches are less easy to intuit. In general, however, it is useful to think of {\lasso} as minimizing prediction error with the {\em fewest} possible predictors (i.e., as many zero coefficients as possible), while ridge regression can be viewed as ``spreading'' small weights over all predictors exhibiting any systematic relationship with the category labels, without care for the number of predictors. 
 
 %What assumptions do these approaches then bring about the nature of the underlying representation? Let's first consider the univariate assumptions: 
 %
@@ -79,10 +79,10 @@ With these assumptions, what signal do {\lasso} and ridge regression detect in t
 Logistic {\lasso} and ridge regression were conducted using {\glmnet} (Friedman, Hastie, \& Tibshirani, 2010) in {\matlab} (2013a). Both methods have a free parameter $\lambda$ that controls the importance of the regularization penalty relative to the prediction error, leading to greater sparsity in {\lasso} and more severe weight shrinkage in ridge regression. The analysis thus proceeded in two steps: one to estimate a useful $\lambda$ for each subject, and a second to fit a model at the estimated $\lambda$ and evaluate it on a hold-out set. The data for each model subject was first divided into 6 equal parts, each containing the same number of category A and B items. One part was set aside and the remaining 5 were passed to a function that conducted a 5-fold cross validation accuracy test at 100 values of $\lambda$. The function returns the $\lambda$ producing the highest cross-validation accuracy, which is subsequently used to fit a model to all 5 parts of the data. The resulting model was then assessed on the original hold-out set (the 6th part). This procedure was carried out separately for all 10 model subjects, in both localized and anatomically dispersed model variants, for both {\lasso} and ridge regression. For each model subject, each method returns a vector of coefficients that indicates how the classifier interprets each unit's activation in generating a predicted class label. To understand which units contribute to the representation of interest and how these units encode information, the coefficients must be interpreted. A key difference between methods lies in the ease of interpretation. We will therefore consider results from the two methods separately, before contrasting them.
 
 \subsubsection{Results for {\lasso}}
-
-\begin{center}
-\textbf{---Figure \ref{fig.lasso} about here---}
-\end{center}
+%
+%\begin{center}
+%\textbf{---Figure \ref{fig.lasso} about here---}
+%\end{center}
 
 \begin{figure}
 \centering
@@ -97,13 +97,13 @@ Figure \ref{fig.lasso} shows how often {\lasso} selected each unit across the 10
 
 This summary plot is misleading in one sense, however, since it applies an aggregate statistical test across model individuals to assess which units are reliably discovered. Such a test would not be possible with real data, since it would not be clear which voxels should be ``lined up'' across subjects to compute the binomial probabilities. The virtue of {\lasso} (and ridge regression) is that they are essentially single-subject analyses, and so are freed from assumptions about consistency in location and coding across individuals. What we really wish to know is how accurately the solution picks out the units of interest {\em for each individual model}. For every model individual, from the binary classification of selected versus unselected units, we can compute two numbers that jointly describe how well the solution identifies the important units. Specifically, we compute the {\em hit rate}, which is the proportion of actual signal-carrying units identified by the algorithm, and the {\em precision}, which indicates what proportion of the selected units are true signal-carrying voxels. Moreover, these figures can be tallied for just the I/O units, just the hidden units, and for the whole network, to provide an indication of how well the method singles out informative units in these different sets. 
 
-\begin{center}
-\textbf{---Figure \ref{fig.precision} about here---}
-\end{center}
+%\begin{center}
+%\textbf{---Figure \ref{fig.precision} about here---}
+%\end{center}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.6\textwidth]{figures/figure7.eps}
+\includegraphics[width=0.55\textwidth]{figures/figure7.eps}
 \caption{\label{fig.precision} Hit rate and precision for different multivariate methods, computed across the whole network (top), the I/O units only (middle), and the hidden units only (bottom).}
 \end{figure}
 
@@ -120,12 +120,12 @@ Finally, we can ask how well {\lasso} uncovers differences in the representation
 %\end{enumerate}
 
 \subsubsection{Results for ridge regression}
+%
+%\begin{center}
+%\textbf{---Figure \ref{fig.ridge} about here---}
+%\end{center}
 
-\begin{center}
-\textbf{---Figure \ref{fig.ridge} about here---}
-\end{center}
-
-\begin{figure}
+\begin{figure}[b]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/figure8.eps}
 \caption{\label{fig.ridge} The results from the ridge regression analysis. Height of each bar indicates the mean across model subjects of the absolute value of the weight placed on each unit by the classifier. Bar hue indicates the frequency with which each unit received a positive weight across model subjects. Bar saturation indicates which units would count as ``selected'' under three different policies, based on weight magnitude. Bright bars are in the top third of the distribution, pale bars are in the middle third, and gray bars are in the bottom third. Mean and se indicate the mean and standard error of the classifier accuracy, respectively; n indicates the mean number of units with non-zero weights across model subjects.}

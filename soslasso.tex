@@ -4,7 +4,7 @@ The multivariate methods we have considered so far lie at two poles with regard 
 
 With these intuitions in mind, the final method we consider is the {\soslasso} ({\soslassofull}, recently introduced by  \citeA{raoNIPS}). {\soslasso} is a variant of {\lasso} that allows for evaluation of a range of hypotheses regarding localization within and across individuals. It adopts a central and intuitive assumption from {\em multi-task learning} \cite{Caruana97}: if a set of learning tasks are related, then their solutions will also be related. In this case, each ``task'' is to find the neural activation pattern associated with a particular mental state in a single individual. In contrast to {\lasso}, we assume that the solutions across individuals are related: finding useful information in one individual gives us clues about where to look in another. The loose assumptions about localization within and across individuals can be built into a single optimization function that considers all subjects at once.
 
-To achieve this, the voxels in the datasets from every individual are assigned to {\em sets}. Within an individual, voxels belonging to a given set are related to one another in some way--for instance, if the sets are defined by anatomical proximity, voxels within a set will all be near one another. Across individuals sets are aligned, so that voxels in {\em Set 1} for individual 1 are related to voxels in {\em Set 1} of individuals 2 through {\em n}. If sets are defined by anatomical proximity, then voxels in Set 1 will be localized similarly across subjects. The optimization then operates over all subject datasets simultaneously, minimizing an objective function that prefers solutions in which selected voxels belong to as few sets as possible. The end result is a solution that is unique for each dataset (ie, each individual), but with the selected voxels tending to belong to the same sets within and across individuals. 
+To achieve this, the voxels in the datasets from every individual are assigned to {\em sets}. Within an individual, voxels belonging to a given set are related to one another in some way--for instance, if the sets are defined by anatomical proximity, voxels within a set will all be near one another. Across individuals sets are aligned, so that voxels in {\em Set 1} for individual 1 are related to voxels in {\em Set 1} of individuals 2 through {\em n}. If sets are defined by anatomical proximity, then voxels in Set 1 will be localized similarly across subjects. The optimization then operates over all subject datasets simultaneously, minimizing an objective function that prefers solutions in which selected voxels belong to as few sets as possible. The end result is a solution that is unique for each dataset (i.e., each individual), but with the selected voxels tending to belong to the same sets within and across individuals. 
 
 Before considering the objective function itself, it is useful to consider how voxels are assigned to sets. Such assignments are made {\em a priori}, and can in principle be guided by any hypothesis about how voxel sets are best grouped. For instance, sets might be determined by an anatomical segmentation, a previous analysis, a literature review, or any other prior knowledge. Importantly, however, set assignment can also be done in a relatively theory-neutral way: a volume can be split into a collection of {\em overlapping} sets of fixed size and degree of overlap, with each voxel belonging to multiple overlapping sets. On this approach, the voxels for each individual are first projected into a common anatomical reference space (without blurring). The space is divided into a 3-dimensional grid and, for each gridpoint, all voxels within radius $r$ are assigned to a given set. Each set thus contains a group of voxels in roughly the same anatomical location across subjects; each voxel belongs to multiple sets; and the sets overlap in the voxels they contain. The sets are analogous to searchlights, but rather than training separate classifiers for each set in each subject, a regularized logistic classifier is trained on all the data together. Because the optimization prefers solutions in which voxels belong to a small number of sets, such an approach will automatically select the particular grouping of voxels within and across individuals that best minimizes the objective. But, because the solutions are unique to each individual, there is no need for all voxels within a set to be selected or to receive similar weightings within or across individuals.
 
@@ -22,14 +22,14 @@ h(\mathbf{W},\mathbf{S}) = \sum_{s}\left(  \alpha \sqrt{\sum_{i} \mathbf{W}_{si}
 %TR: I changed the G to S above since we are now calling these Sets rather than Groups.
 
 The function has two terms, $\sqrt{\sum{\mathbf{W}^2_{si}}}$ and $\sum{|\mathbf{W}_{si}|}$, which are embedded in a loop that sums over sets. The second term is simply the {\lasso} penalty from Equation \ref{eq.lasso}, computed separately for each set and summed over all sets. The first term, which we will refer to as the {\em set penalty}, takes the root of the squared coefficients summed over units within each set. $\alpha$ is a mixing parameter that determines the weight given to each of these two terms. When $\alpha=0$, the set penalty is not applied and {\soslasso} effectively reduces to {\lasso}. When $\alpha$ is non-zero, however, the penalty behaves differently, preferring solutions where the non-zero coefficients (i.e., the selected voxels) all appear in the same overlapping sets---that is, when they tend to be in similar anatomical locations.
-
-\begin{center}
-	\textbf{---Figure \ref{fig.soslossex} about here---}
-\end{center}
+%
+%\begin{center}
+%	\textbf{---Figure \ref{fig.soslossex} about here---}
+%\end{center}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.95\textwidth]{figures/soslasso_loss_example.eps}
+	\includegraphics[width=0.50\textwidth]{figures/soslasso_loss_example.eps}
 	\caption{A schematic laying out two hypothetical solutions, and the {\em set penalty} they incur. The set penalty is one of the components of the {\soslasso} regularizer. Note that in cases of overlap, the weight will be accounted for only once, as belonging to the set in which it increases the penalty by the smallest amount. In other words, {\soslasso} will consolidate weights into as few groups as possible.}
 	\label{fig.soslossex} 
 \end{figure}
@@ -56,12 +56,12 @@ By assuming that signal is potentially both structured and sparse, how does this
 The {\soslasso} analysis was implemented using custom code built on top of the MALSAR package \cite{malsar} for {\matlab}. The data were divided into overlapping groups based on ``anatomical'' proximity. Each set included 5 units, and the groups overlapped with each other by 2 units. The set size was kept smaller than the smallest expected cluster of informative units in the localized data, but was otherwise arbitrary. {\soslasso} has two free parameters, one controlling sparsity at the set level and one controlling overall sparsity. As in the previous analysis, these parameter values  were selected through an internal 5-fold cross-validation process, then a final model was trained with the best parameters and tested on a sixth hold-out set. Note that {\soslasso} is trained on all model subjects simultaneously, but produces a unique solution for each subject. Thus the results were analyzed in the same way as the {\lasso} and ridge regression results.
 
 \subsubsection{Results}
+%
+%\begin{center}
+%\textbf{---Figure \ref{fig.sos} about here---}
+%\end{center}
 
-\begin{center}
-\textbf{---Figure \ref{fig.sos} about here---}
-\end{center}
-
-\begin{figure}
+\begin{figure}[b]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/figure9.eps}
 \caption{The results from the {\soslasso} analysis. The height of each bar corresponds to the number of times each unit was selected over subjects. Colored bars were selected more times than would be expected given the overall rate of unit selection. The blueness or redness of the bar conveys the frequency with which each unit was assigned a positive weight over subjects. Positive weights mean that activation at that unit will push the model towards labeling the current item as belonging to domain A. Mean and se indicate the mean and standard error of the classifier accuracy, respectively; n indicates the number of units selected more often than chance across model subjects.}
@@ -82,6 +82,15 @@ Finally, with regard to laying bare the representational code, {\soslasso} perfo
 
 These results provide answers to our core questions, summarized in Table \ref{tab.modelresults}.
 
+\begin{table}[t]
+	\input{tables/table_modelresults.tex}
+	\caption{A summary of the answers for each method across the four central questions. $\dagger$ The success of the searchlight was contingent on model parameters that may be difficult to discern in practice. $\ddagger$ Ridge regression identifies all units as informative, including ones that in fact contain no information.} 
+	\label{tab.modelresults}
+\end{table}
+
+%\begin{center}
+%	\textbf{--- Table \ref{tab.modelresults} about here---}
+%\end{center}
 
 %In sum, {\soslasso} shows the following answers to the core questions: 
 %

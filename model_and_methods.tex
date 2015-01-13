@@ -1,12 +1,12 @@
 \section{Model and Methods}
 
-\begin{center}
-\textbf{---Figure \ref{fig.model_outline} about here---}
-\end{center}
+%\begin{center}
+%\textbf{---Figure \ref{fig.model_outline} about here---}
+%\end{center}
 
-\begin{figure}
+\begin{figure}[b]
 \centering
-\includegraphics[width=0.75\textwidth]{figures/figure2.eps}
+\includegraphics[width=0.65\textwidth]{figures/figure2.eps}
 \caption{\label{fig.model_outline} Architecture of the auto-encoder network used to generate the data for 10 model subjects used in subsequent simulations. The model has 36 input units (18 systematic), 14 hidden units (7 systematic), and 36 output units (18 systematic). The 22 irrelevant units are completely disconnected from the network, and stand for units that subserve an unrelated function but are anatomically adjacent to units of interest.}
 \end{figure}
 
@@ -26,11 +26,11 @@ Indeed, the SH units arguably provide a better encoding of the domain structure 
 
 Finally, the model also includes 22 completely irrelevant units. These are units assumed to be anatomically near the SH and AH units but uninvolved in the task. These units always take a low activation value, and provide a simple model analog of the fact noted above that the units of interest may exist alongside other units that remain uninvolved in the task under investigation.
 
-\begin{center}
-\textbf{---Figure \ref{fig.between_within_dist} about here---}
-\end{center}
+%\begin{center}
+%\textbf{---Figure \ref{fig.between_within_dist} about here---}
+%\end{center}
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.5\textwidth]{figures/figure3.eps}
 \caption{\label{fig.between_within_dist} Left: Ratio of between-domain to within-domain Euclidean distances for the representations coded over different sets of units in the network, averaged over the 10 model subjects. Distributed representations that encode the domain structure should have large distances for items from different domains and small distances for items from the same domain, and so should show a large ratio. While the systematic I/O units clearly code the domain structure to some degree, the systematic hidden units express the structure more strongly. 

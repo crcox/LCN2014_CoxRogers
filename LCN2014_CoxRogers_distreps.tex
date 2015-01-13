@@ -1,4 +1,4 @@
-\documentclass[12pt,man]{apa6}
+\documentclass[12pt,man,floatsintext]{apa6}
 \usepackage[nodoi]{apacite}
 \usepackage{boolexpr}
 \usepackage[outdir=./figures/]{epstopdf}
@@ -9,9 +9,10 @@
 \usepackage{rotating}
 \usepackage{setspace}
 \usepackage{array}
+\usepackage{float}
 
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
-\DeclareDelayedFloatFlavor{sidewaystable}{table}
+%\DeclareDelayedFloatFlavor{sidewaystable}{table}
 \DeclareDelayedFloatFlavor{sidewaysfigure}{figure}
 
 \input{tables/table_assumptions_content.tex}
@@ -68,14 +69,6 @@ We have no conflicts of interest.
 \input{soslasso.tex}
 
 %\input{summary_of_model_results.tex}
-\begin{table}
-	\input{tables/table_modelresults.tex}
-	\caption{A summary of the answers for each method across the four central questions. $\dagger$ The success of the searchlight was contingent on model parameters that may be difficult to discern in practice. $\ddagger$ Ridge regression identifies all units as informative, including ones that in fact contain no information.} 
-	\label{tab.modelresults}
-\end{table}
-\begin{center}
-	\textbf{---Figure \ref{tab.modelresults} about here---}
-\end{center}
 
 \input{cmu_results.tex}
 
